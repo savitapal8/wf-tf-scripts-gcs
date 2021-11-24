@@ -18,8 +18,9 @@ resource "google_storage_bucket" "GCS" {
       default_kms_key_name  = google_kms_crypto_key.secret.id
   }
 
-  lifecycle_rule {
+  lifecycle_rule {    
     condition {
+      num_newer_versions = 2
       age = 3
      
     }
@@ -60,8 +61,8 @@ data "google_storage_project_service_account" "gcs_account" {
 resource "google_kms_crypto_key_iam_member" "gcs_encryption" {
  crypto_key_id = google_kms_crypto_key.secret.id
  role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
- member        = "serviceAccount:service-680501254856@gs-project-accounts.iam.gserviceaccount.com"
- #member        = "serviceAccount:${data.google_storage_project_service_account.gcs_account.email_address}"
+ #member       = "serviceAccount:service-680501254856@gs-project-accounts.iam.gserviceaccount.com"
+ member        = "serviceAccount:${data.google_storage_project_service_account.gcs_account.email_address}"
 }
 
 /*
