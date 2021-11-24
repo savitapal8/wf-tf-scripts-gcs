@@ -10,6 +10,23 @@ resource "google_storage_bucket" "GCS" {
   location      = "us"  
   force_destroy = true
   
+  versioning {
+    enabled = true
+  }
+
+  
+
+  lifecycle_rule {    
+    condition {
+      #num_newer_versions = 2
+      age = 3
+     
+    }
+    action {
+      type = "Delete"
+    }
+
+  }
 
  labels = {
     owner = "wf"
