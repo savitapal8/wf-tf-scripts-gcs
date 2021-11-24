@@ -34,9 +34,9 @@ resource "google_storage_bucket" "GCS" {
  labels = {
     owner = "hybridenv"
     application_division = "pci"
-    application_name = "GcpResourceDeployment1"
+    application_name = "App1GcpResourceDeployment1"
     application_role = "auth"
-    au = "Hybrid code = 0223094"
+    au = "0223092"
     gcp_region = "us" 
     environment = "dev" 
     created = "20211124"   
@@ -52,9 +52,9 @@ resource "google_kms_crypto_key" "secret" {
  labels = {
     owner = "hybridenv"
     application_division = "pci"
-    application_name = "GcpResourceDeployment1"
+    application_name = "App1GcpResourceDeployment1"
     application_role = "auth"
-    au = "Hybrid code = 0223094"
+    au = "0223092"
     gcp_region = "us" 
     environment = "dev" 
     created = "20211124" 
