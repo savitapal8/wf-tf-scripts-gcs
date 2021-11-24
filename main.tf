@@ -5,7 +5,7 @@ provider "google" {
 
 
 resource "google_storage_bucket" "GCS" {
-  name          = "my-dev-appid-strg-demo8-gcsbucket"
+  name          = "my-dev-appid-strg-demo9-gcsbucket"
   project       = "airline1-sabre-wolverine"
   location      = "us"  
   force_destroy = true
@@ -43,7 +43,7 @@ resource "google_storage_bucket" "GCS" {
 }
 
 resource "google_kms_crypto_key" "secret" {
- name     = "my-dev-appid-strg-demo8-key"
+ name     = "my-dev-appid-strg-demo9-key"
  labels = {
     owner = "wf"
     application_division = "pci"
