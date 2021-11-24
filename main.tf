@@ -36,6 +36,9 @@ resource "google_storage_bucket" "GCS" {
     application_name = ""
     application_role = "auth"
     au = ""
+    gcp_region = "us" 
+    environment = "dev" 
+    created = "24/11/2021"   
   }
   depends_on = [
       google_kms_crypto_key.secret, google_kms_crypto_key_iam_member.gcs_encryption
@@ -50,6 +53,9 @@ resource "google_kms_crypto_key" "secret" {
     application_name = ""
     application_role = "auth"
     au = ""
+    gcp_region = "us" 
+    environment = "dev" 
+    created = "24/11/2021" 
   }
  key_ring = "projects/airline1-sabre-wolverine/locations/us/keyRings/savita-keyring-us"
 }
