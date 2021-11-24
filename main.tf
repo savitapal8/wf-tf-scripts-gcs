@@ -5,30 +5,11 @@ provider "google" {
 
 
 resource "google_storage_bucket" "GCS" {
-  name          = "my-dev-appid-strg-demo9-gcsbucket"
+  name          = "my-appid-strg-demo9-gcsbucket"
   project       = "airline1-sabre-wolverine"
   location      = "us"  
   force_destroy = true
-  versioning {
-    enabled = true
-  }
-
-  encryption {
-      #default_kms_key_name = "projects/airline1-sabre-wolverine/locations/us/keyRings/savita-keyring-us/cryptoKeys/savita-key-us" #google_kms_crypto_key_iam_member.gcs_encryption.id
-      default_kms_key_name  = google_kms_crypto_key.secret.id
-  }
-
-  lifecycle_rule {    
-    condition {
-      num_newer_versions = 2
-      age = 3
-     
-    }
-    action {
-      type = "Delete"
-    }
-
-  }
+  
 
  labels = {
     owner = "wf"
@@ -40,13 +21,11 @@ resource "google_storage_bucket" "GCS" {
     environment = "dev" 
     created = "24/11/2021"   
   }
-  depends_on = [
-      google_kms_crypto_key.secret, google_kms_crypto_key_iam_member.gcs_encryption
-  ]
+  
 }
 
 resource "google_kms_crypto_key" "secret" {
- name     = "my-dev-appid-strg-demo9-key"
+ name     = "my-appid-strg-demo9-key"
  labels = {
     owner = "wf"
     application_division = "pci"
