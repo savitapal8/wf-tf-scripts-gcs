@@ -5,7 +5,7 @@ provider "google" {
 
 
 resource "google_storage_bucket" "GCS" {
-  name          = "my-appid-strg-demo9-gcsbucket"
+  name          = "my-dev-appid-strg-demo9-gcsbucket"
   project       = "airline1-sabre-wolverine"
   location      = "us"  
   force_destroy = true
@@ -14,11 +14,14 @@ resource "google_storage_bucket" "GCS" {
     enabled = true
   }
 
-  
+  encryption {
+      #default_kms_key_name = "projects/airline1-sabre-wolverine/locations/us/keyRings/savita-keyring-us/cryptoKeys/savita-key-us" #google_kms_crypto_key_iam_member.gcs_encryption.id
+      default_kms_key_name  = google_kms_crypto_key.secret.id
+  }  
 
   lifecycle_rule {    
     condition {
-      #num_newer_versions = 2
+      num_newer_versions = 2
       age = 3
      
     }
@@ -29,29 +32,32 @@ resource "google_storage_bucket" "GCS" {
   }
 
  labels = {
-    owner = "wf"
+    owner = "hybridenv"
     application_division = "pci"
-    application_name = ""
+    application_name = "GcpResourceDeployment1"
     application_role = "auth"
-    au = ""
+    au = "Hybrid code = 0223092"
     gcp_region = "us" 
     environment = "dev" 
-    created = "24/11/2021"   
+    created = "20211124"   
   }
   
+ depends_on = [
+      google_kms_crypto_key.secret, google_kms_crypto_key_iam_member.gcs_encryption
+  ]
 }
 
 resource "google_kms_crypto_key" "secret" {
- name     = "my-appid-strg-demo9-key"
+ name     = "my-dev-appid-strg-demo9-key"
  labels = {
-    owner = "wf"
+    owner = "hybridenv"
     application_division = "pci"
-    application_name = ""
+    application_name = "GcpResourceDeployment1"
     application_role = "auth"
-    au = ""
+    au = "Hybrid code = 0223092"
     gcp_region = "us" 
     environment = "dev" 
-    created = "24/11/2021" 
+    created = "20211124" 
   }
  key_ring = "projects/airline1-sabre-wolverine/locations/us/keyRings/savita-keyring-us"
 }
