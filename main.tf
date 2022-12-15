@@ -59,17 +59,17 @@ resource "google_kms_crypto_key" "secret" {
     environment = "dev" 
     created = "20211124" 
   }
- key_ring = "projects/airline1-sabre-wolverine/locations/us/keyRings/savita-keyring-us"
+ key_ring = "projects/xxxxxx-xxxx-xxxxxx/locations/us/keyRings/savita-keyring-us"
 }
 
 data "google_storage_project_service_account" "gcs_account" {
- project =  "airline1-sabre-wolverine"
+ project =  "xxxxxx-xxxx-xxxxxx"
 }
 
 resource "google_kms_crypto_key_iam_member" "gcs_encryption" {
  crypto_key_id = google_kms_crypto_key.secret.id
  role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
- #member       = "serviceAccount:service-680501254856@gs-project-accounts.iam.gserviceaccount.com"
+ #member       = "serviceAccount:service-680501222346@gs-project-accounts.iam.gserviceaccount.com"
  member        = "serviceAccount:${data.google_storage_project_service_account.gcs_account.email_address}"
 }
 
